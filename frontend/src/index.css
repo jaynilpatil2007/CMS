@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dot-grid {
+    background-image: radial-gradient(circle at 0.8px 0.8px, rgba(18, 18, 18, 0.3) 0.8px, transparent 0);
+    background-size: 12px 12px;
+    background-repeat: repeat;
+}
