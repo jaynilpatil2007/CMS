@@ -33,13 +33,14 @@ export const navbarEdit = asyncHandler(async (req, res) => {
             $set: updatedData
         },
         {
-            new: true,
+            returnDocument: "after",
             runValidators: true,
+            upsert: true,
         }
     );
 
     if (!navbar) {
-        throw new ApiError(404, "navbar not found");
+        throw new ApiError(404, "Failed to update navbar");
     }
 
     return res.status(200)
@@ -49,7 +50,7 @@ export const navbarEdit = asyncHandler(async (req, res) => {
 });
 
 export const heroEdit = asyncHandler(async (req, res) => {
-    const heroImagePath = req.file?.path;
+    const heroImagePath = req.files?.img?.[0]?.path;
     if (!heroImagePath) throw new ApiError(404, "image is required");
 
     const uploadImage = await uploadCloudinary(heroImagePath);
@@ -65,8 +66,9 @@ export const heroEdit = asyncHandler(async (req, res) => {
             }
         },
         {
-            new: true,
+            returnDocument: "after",
             runValidators: true,
+            upsert: true,
         }
     )
 

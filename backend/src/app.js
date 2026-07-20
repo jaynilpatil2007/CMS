@@ -18,8 +18,10 @@ app.use(cookieParser());
 
 import authRoute from "./routes/auth.route.js"
 import editRoute from "./routes/edit.route.js"
+import contentRoute from "./routes/content.route.js"
 
 app.use("/api/admin", authRoute);
 app.use("/api/edit", editRoute);
+app.use("/api/content", contentRoute);
 
 export default app;

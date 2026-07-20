@@ -1,9 +1,11 @@
 import { Plus, Trash2, X } from "lucide-react";
 import { useState } from "react";
+import { useEditStore } from "../store/hero.store";
 
 function NavbarEditCard({ navbar, onClose }) {
   const [headings, setHeadings] = useState(navbar?.headings ?? []);
   const [buttonText, setButtonText] = useState(navbar?.buttonText ?? "");
+  const { updateNavbar } = useEditStore();
 
   const handleHeadingChange = (index, value) => {
     const updatedHeadings = [...headings];
@@ -20,13 +22,14 @@ function NavbarEditCard({ navbar, onClose }) {
     setHeadings(headings.filter((_, i) => i !== index));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const data = {
       headings,
       buttonText,
     };
 
-    console.log(data);
+    await updateNavbar(data);
+    onClose();
   };
 
   return (

@@ -1,8 +1,10 @@
 import { ImagePlus, Trash2, X } from "lucide-react";
 import { useState } from "react";
+import { useEditStore } from "../store/hero.store";
 
 function HeroEditCard({ hero, onClose }) {
   const [images, setImages] = useState(hero?.eventImg ?? []);
+  const { updateHero } = useEditStore();
 
   const handleAddImage = (e) => {
     const files = Array.from(e.target.files);
@@ -19,8 +21,15 @@ function HeroEditCard({ hero, onClose }) {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleSave = () => {
-    console.log(images);
+  const handleSave = async () => {
+    for (const image of images) {
+      if (image.file) {
+        const formData = new FormData();
+        formData.append('img', image.file);
+        await updateHero(formData);
+      }
+    }
+    onClose();
   };
 
   return (

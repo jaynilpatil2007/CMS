@@ -1,11 +1,18 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router";
 import { useAuthStore } from "../store/auth.store";
 import { LoaderIcon } from "lucide-react";
 
 export default function Login() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({ adminId: "", password: "" });
-    const { login, LoginLoading } = useAuthStore();
+    const { login, LoginLoading, authUser } = useAuthStore();
+
+    useEffect(() => {
+        if (authUser) {
+            navigate("/");
+        }
+    }, [authUser, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

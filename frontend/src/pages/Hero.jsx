@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import { EditIcon } from "lucide-react";
 import { useAuthStore } from "../store/auth.store";
 import { useEditStore } from "../store/hero.store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavbarEditCard from "../component/NavbarCardEdit";
 import HeroEditCard from "../component/HeroCardEdit";
 
@@ -16,12 +16,19 @@ function Hero() {
     const [heroEdit, setHeroEdit] = useState(false);
 
     const { authUser } = useAuthStore();
-    const { navbar, hero } = useEditStore();
+    const { navbar, hero, fetchNavbar, fetchHero } = useEditStore();
+    console.log(navbar);
+    console.log(hero);
     const navHeadings = navbar?.headings ?? [];
     const heroImages = hero?.eventImg ?? [];
 
     const fallbackImages = ["/img1.jpg", "/img2.jpg", "/img3.jpg"];
     const slides = heroImages.length > 0 ? heroImages : fallbackImages;
+
+    useEffect(() => {
+        fetchHero();
+        fetchNavbar();
+    }, [fetchHero, fetchNavbar]);
 
   return (
 
@@ -52,7 +59,7 @@ function Hero() {
             </div>
             <div>
                 <button className="rounded bg-sky-600 px-4 py-2 text-sm text-white hover:bg-sky-500">
-                    Login
+                    {navbar?.buttonText || "Login"}
                 </button>
             </div>
         </nav>

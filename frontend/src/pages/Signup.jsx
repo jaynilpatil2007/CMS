@@ -1,11 +1,18 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router";
 import { useAuthStore } from "../store/auth.store";
 import { LoaderIcon } from "lucide-react";
 
 export default function Signup() {
-  const [formData, setFormData] = useState({ adminID: "", password: ""});
-  const { signup, SignupLoading } = useAuthStore();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ adminId: "", password: ""});
+  const { signup, SignupLoading, authUser } = useAuthStore();
+
+  useEffect(() => {
+    if (authUser) {
+      navigate("/admin-login");
+    }
+  }, [authUser, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,8 +53,8 @@ export default function Signup() {
 
               <input
                 type="text"
-                value={formData.adminID}
-                onChange={(e) => setFormData({...formData, adminID: e.target.value })}
+                value={formData.adminId}
+                onChange={(e) => setFormData({...formData, adminId: e.target.value })}
                 placeholder="admin123"
                 className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 outline-none transition focus:border-black"
               />

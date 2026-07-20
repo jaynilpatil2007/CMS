@@ -15,10 +15,15 @@ export const uploadCloudinary = async (localFilePath) => {
             resource_type: "auto"
         })
 
-        fs.unlinkSync(localFilePath);
+        if (fs.existsSync(localFilePath)) {
+            fs.unlinkSync(localFilePath);
+        }
         return response;
     } catch (error) {
-        fs.unlinkSync(localFilePath); // remove the locally saved temporary file as the upload operation got failed
+        console.log("CLOUDIANARY ERROR:", error);
+        if (fs.existsSync(localFilePath)) {
+            fs.unlinkSync(localFilePath);
+        }
         return null;
     }
 }
