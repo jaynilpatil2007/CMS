@@ -4,8 +4,6 @@ import { verifyJWT } from "../middlewares/auth.middlerware.js";
 
 const router = Router();
 
-router.use(verifyJWT);
-
 router.route("/navbar").get(getNavbar);
 
 router.route("/hero").get(getHero);

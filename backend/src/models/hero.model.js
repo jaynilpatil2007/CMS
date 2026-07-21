@@ -6,10 +6,12 @@ const heroSchema = new mongoose.Schema({
         ref: "Admin",
         required: true,
     },
-    eventImg: {
-        type: String,
-        required: true,
-    }
+    eventImg: [
+        {
+            type: String,
+            required: true,
+        }
+    ]
 }, { timestamps: true });
 
 export const Hero = mongoose.model("Hero", heroSchema);

@@ -17,8 +17,6 @@ function Hero() {
 
     const { authUser } = useAuthStore();
     const { navbar, hero, fetchNavbar, fetchHero } = useEditStore();
-    console.log(navbar);
-    console.log(hero);
     const navHeadings = navbar?.headings ?? [];
     const heroImages = hero?.eventImg ?? [];
 
